@@ -38,7 +38,7 @@ RUN set -eux; \
 
 RUN git clone https://github.com/hviet2603/haproxy.git
 
-RUN cd /haproxy && git checkout v2.9.0-randomjump; \
+RUN cd /haproxy && git checkout v2.9.0-rotor; \
     makeOpts=' \
         TARGET=linux-musl \
         USE_GETADDRINFO=1 \

@@ -50,16 +50,16 @@ RUN cd /haproxy && git checkout v2.9.0; \
     make -j8 all $makeOpts \
     && make install install-bin $makeOpts 
 
-#RUN runDeps="$( \
-#        scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
-#            | tr ',' '\n' \
-#            | sort -u \
-#            | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
-#    )"; \
-#    apk add --no-network --virtual .haproxy-rundeps $runDeps; \
-#    apk del --no-network .build-deps; 
+RUN runDeps="$( \
+        scanelf --needed --nobanner --format '%n#p' --recursive /usr/local \
+            | tr ',' '\n' \
+            | sort -u \
+            | awk 'system("[ -e /usr/local/lib/" $1 " ]") == 0 { next } { print "so:" $1 }' \
+    )"; \
+    apk add --no-network --virtual .haproxy-rundeps $runDeps; \
+    apk del --no-network .build-deps; 
 
-#RUN rm -rf /haproxy
+RUN rm -rf /haproxy
 
 RUN mkdir -p /usr/local/etc/haproxy
 
