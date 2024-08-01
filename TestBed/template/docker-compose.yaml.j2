@@ -1,0 +1,78 @@
+#version: "3.9"
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27017:27017
+  
+  ### caches ###
+{% for i in range(1, n_backends + 1) %}
+  cache_{{ i }}:
+    image: redis:7.0-alpine
+    ports:
+      - {{ cache_port_base + i - 1 }}:6379
+{% endfor %}
+  
+  ### cache monitoring ###
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    volumes:
+      - ./monitoring/grafana:/var/lib/grafana:rw
+  
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    depends_on:
+      - redis_exporter
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  
+  redis_exporter:
+    image: oliver006/redis_exporter:alpine
+    depends_on:
+      {% for i in range(1, n_backends + 1) -%}
+      - cache_{{ i }}
+      {% endfor %}      
+    ports:
+      - 9121:9121
+
+  ### backends ###
+{% for i in range(1, n_backends + 1) %}
+  backend_{{ i }}:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - {{ backend_port_base + i }}:3000
+    depends_on:
+      - mongo
+      - cache_{{ i }}
+    environment:
+      - BACKEND_NAME=backend_{{ i }}
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_{{ i }}:6379
+{% endfor %}
+  
+  ### load balancer ###
+  haproxy:
+    image: vdocker2603/haproxy-v2.9.0-nap:normal
+    #image: vdocker2603/haproxy-v2.9.0-nap:chrj
+    ports:
+      - 8080:80
+      - 8404:8404
+    volumes:
+      - ./haproxy_conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    depends_on:
+      {% for i in range(1, n_backends + 1) -%}
+      - backend_{{ i }}
+      {% endfor %}

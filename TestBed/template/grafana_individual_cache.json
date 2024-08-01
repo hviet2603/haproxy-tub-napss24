@@ -1,0 +1,75 @@
+{
+    "dashboard": {
+        "id": 2,
+        "panels": [
+            {
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_1:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 1",
+                        "range": true,
+                        "refId": "hit_1",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_1:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 1",
+                        "range": true,
+                        "refId": "miss_1",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_1)  / ($hit_1 + $miss_1))*100",
+                        "hide": false,
+                        "refId": "hit_rate_1",
+                        "type": "math"
+                    }
+                ],
+                "title": "Panel Title",
+                "type": "timeseries"
+            }
+        ],
+        "refresh": "5s",
+        "schemaVersion": 39,
+        "tags": [],
+        "templating": {
+            "list": []
+        },
+        "time": {
+            "from": "now-5m",
+            "to": "now"
+        },
+        "timeRangeUpdatedDuringEditOrView": false,
+        "timepicker": {},
+        "timezone": "browser",
+        "title": "Individual Cache Hit Rate",
+        "uid": "edqvbldk7s1z4e",
+        "version": 7,
+        "weekStart": ""
+    }
+}

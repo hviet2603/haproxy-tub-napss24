@@ -1,0 +1,614 @@
+{
+    "meta": {
+        "type": "db",
+        "canSave": true,
+        "canEdit": true,
+        "canAdmin": true,
+        "canStar": true,
+        "canDelete": true,
+        "slug": "individual-cache-hit-rate",
+        "url": "/d/edqvbldk7s1z4e/individual-cache-hit-rate",
+        "expires": "0001-01-01T00:00:00Z",
+        "created": "2024-07-05T20:27:53Z",
+        "updated": "2024-07-05T22:08:25Z",
+        "updatedBy": "admin",
+        "createdBy": "admin",
+        "version": 7,
+        "hasAcl": false,
+        "isFolder": false,
+        "folderId": 0,
+        "folderUid": "",
+        "folderTitle": "General",
+        "folderUrl": "",
+        "provisioned": false,
+        "provisionedExternalId": "",
+        "annotationsPermissions": {
+            "dashboard": {
+                "canAdd": true,
+                "canEdit": true,
+                "canDelete": true
+            },
+            "organization": {
+                "canAdd": true,
+                "canEdit": true,
+                "canDelete": true
+            }
+        }
+    },
+    "dashboard": {
+        "annotations": {
+            "list": [
+                {
+                    "builtIn": 1,
+                    "datasource": {
+                        "type": "grafana",
+                        "uid": "-- Grafana --"
+                    },
+                    "enable": true,
+                    "hide": true,
+                    "iconColor": "rgba(0, 211, 255, 1)",
+                    "name": "Annotations & Alerts",
+                    "type": "dashboard"
+                }
+            ]
+        },
+        "editable": true,
+        "fiscalYearStartMonth": 0,
+        "graphTooltip": 0,
+        "id": 2,
+        "links": [],
+        "panels": [
+            {
+                "datasource": {
+                    "type": "prometheus",
+                    "uid": "adohn28rwqsqob"
+                },
+                "fieldConfig": {
+                    "defaults": {
+                        "color": {
+                            "mode": "palette-classic"
+                        },
+                        "custom": {
+                            "axisBorderShow": false,
+                            "axisCenteredZero": false,
+                            "axisColorMode": "text",
+                            "axisLabel": "",
+                            "axisPlacement": "auto",
+                            "barAlignment": 0,
+                            "drawStyle": "line",
+                            "fillOpacity": 0,
+                            "gradientMode": "none",
+                            "hideFrom": {
+                                "legend": false,
+                                "tooltip": false,
+                                "viz": false
+                            },
+                            "insertNulls": false,
+                            "lineInterpolation": "linear",
+                            "lineWidth": 1,
+                            "pointSize": 5,
+                            "scaleDistribution": {
+                                "type": "linear"
+                            },
+                            "showPoints": "auto",
+                            "spanNulls": false,
+                            "stacking": {
+                                "group": "A",
+                                "mode": "none"
+                            },
+                            "thresholdsStyle": {
+                                "mode": "off"
+                            }
+                        },
+                        "mappings": [],
+                        "thresholds": {
+                            "mode": "absolute",
+                            "steps": [
+                                {
+                                    "color": "green",
+                                    "value": null
+                                },
+                                {
+                                    "color": "red",
+                                    "value": 80
+                                }
+                            ]
+                        }
+                    },
+                    "overrides": []
+                },
+                "gridPos": {
+                    "h": 18,
+                    "w": 17,
+                    "x": 0,
+                    "y": 0
+                },
+                "id": 1,
+                "options": {
+                    "legend": {
+                        "calcs": [],
+                        "displayMode": "list",
+                        "placement": "bottom",
+                        "showLegend": true
+                    },
+                    "tooltip": {
+                        "maxHeight": 600,
+                        "mode": "single",
+                        "sort": "none"
+                    }
+                },
+                "targets": [
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_1:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 1",
+                        "range": true,
+                        "refId": "hit_1",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_2:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 2",
+                        "range": true,
+                        "refId": "hit_2",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_3:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 3",
+                        "range": true,
+                        "refId": "hit_3",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_4:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 4",
+                        "range": true,
+                        "refId": "hit_4",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_5:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 5",
+                        "range": true,
+                        "refId": "hit_5",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_6:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 6",
+                        "range": true,
+                        "refId": "hit_6",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_7:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 7",
+                        "range": true,
+                        "refId": "hit_7",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_8:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 8",
+                        "range": true,
+                        "refId": "hit_8",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_9:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 9",
+                        "range": true,
+                        "refId": "hit_9",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_hits_total{instance=\"redis://cache_10:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Hit 10",
+                        "range": true,
+                        "refId": "hit_10",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_1:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 1",
+                        "range": true,
+                        "refId": "miss_1",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_2:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 2",
+                        "range": true,
+                        "refId": "miss_2",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_3:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 3",
+                        "range": true,
+                        "refId": "miss_3",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_4:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 4",
+                        "range": true,
+                        "refId": "miss_4",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_5:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 5",
+                        "range": true,
+                        "refId": "miss_5",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_6:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 6",
+                        "range": true,
+                        "refId": "miss_6",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_7:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 7",
+                        "range": true,
+                        "refId": "miss_7",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_8:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 8",
+                        "range": true,
+                        "refId": "miss_8",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_9:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 9",
+                        "range": true,
+                        "refId": "miss_9",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "type": "prometheus",
+                            "uid": "adohn28rwqsqob"
+                        },
+                        "disableTextWrap": false,
+                        "editorMode": "builder",
+                        "expr": "redis_keyspace_misses_total{instance=\"redis://cache_10:6379\"}",
+                        "fullMetaSearch": false,
+                        "hide": true,
+                        "includeNullMetadata": true,
+                        "instant": false,
+                        "legendFormat": "Miss 10",
+                        "range": true,
+                        "refId": "miss_10",
+                        "useBackend": false
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_1)  / ($hit_1 + $miss_1))*100",
+                        "hide": false,
+                        "refId": "hit_rate_1",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_2)  / ($hit_2 + $miss_2))*100",
+                        "hide": false,
+                        "refId": "hit_rate_2",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_3)  / ($hit_3 + $miss_3))*100",
+                        "hide": false,
+                        "refId": "hit_rate_3",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_4)  / ($hit_4 + $miss_4))*100",
+                        "hide": false,
+                        "refId": "hit_rate_4",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_5)  / ($hit_5 + $miss_5))*100",
+                        "hide": false,
+                        "refId": "hit_rate_5",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_6)  / ($hit_6 + $miss_6))*100",
+                        "hide": false,
+                        "refId": "hit_rate_6",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_7)  / ($hit_7 + $miss_7))*100",
+                        "hide": false,
+                        "refId": "hit_rate_7",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_8)  / ($hit_8 + $miss_8))*100",
+                        "hide": false,
+                        "refId": "hit_rate_8",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_9)  / ($hit_9 + $miss_9))*100",
+                        "hide": false,
+                        "refId": "hit_rate_9",
+                        "type": "math"
+                    },
+                    {
+                        "datasource": {
+                            "name": "Expression",
+                            "type": "__expr__",
+                            "uid": "__expr__"
+                        },
+                        "expression": "(($hit_10)  / ($hit_10 + $miss_10))*100",
+                        "hide": false,
+                        "refId": "hit_rate_10",
+                        "type": "math"
+                    }
+                ],
+                "title": "Panel Title",
+                "type": "timeseries"
+            }
+        ],
+        "refresh": "5s",
+        "schemaVersion": 39,
+        "tags": [],
+        "templating": {
+            "list": []
+        },
+        "time": {
+            "from": "now-5m",
+            "to": "now"
+        },
+        "timeRangeUpdatedDuringEditOrView": false,
+        "timepicker": {},
+        "timezone": "browser",
+        "title": "Individual Cache Hit Rate",
+        "uid": "edqvbldk7s1z4e",
+        "version": 7,
+        "weekStart": ""
+    }
+}

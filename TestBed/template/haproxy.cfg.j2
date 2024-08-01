@@ -1,0 +1,35 @@
+# haproxy.cfg
+global
+    log stdout format raw local0
+    maxconn 2000
+    user haproxy
+    group haproxy
+
+defaults
+    log global
+    mode http
+    option httplog
+    option dontlognull
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+frontend stats
+    mode http
+    bind *:8404
+    stats enable
+    stats uri /stats
+    stats refresh 5s
+    stats admin if LOCALHOST
+
+frontend http_front
+    bind *:80
+    default_backend http_back
+
+backend http_back
+    balance url_param id check_post
+    hash-balance-factor 125
+    hash-type consistent
+    {% for i in range(1, n_backends + 1) -%}
+    server backend_{{i}} backend_{{i}}:3000 check
+    {% endfor %}

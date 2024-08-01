@@ -1,0 +1,223 @@
+#version: "3.9"
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - 27017:27017
+  
+  ### caches ###
+
+  cache_1:
+    image: redis:7.0-alpine
+    ports:
+      - 6379:6379
+
+  cache_2:
+    image: redis:7.0-alpine
+    ports:
+      - 6380:6379
+
+  cache_3:
+    image: redis:7.0-alpine
+    ports:
+      - 6381:6379
+
+  cache_4:
+    image: redis:7.0-alpine
+    ports:
+      - 6382:6379
+
+  cache_5:
+    image: redis:7.0-alpine
+    ports:
+      - 6383:6379
+
+  cache_6:
+    image: redis:7.0-alpine
+    ports:
+      - 6384:6379
+
+  cache_7:
+    image: redis:7.0-alpine
+    ports:
+      - 6385:6379
+
+  cache_8:
+    image: redis:7.0-alpine
+    ports:
+      - 6386:6379
+
+  
+  ### cache monitoring ###
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    volumes:
+      - ./monitoring/grafana:/var/lib/grafana:rw
+  
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    depends_on:
+      - redis_exporter
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  
+  redis_exporter:
+    image: oliver006/redis_exporter:alpine
+    depends_on:
+      - cache_1
+      - cache_2
+      - cache_3
+      - cache_4
+      - cache_5
+      - cache_6
+      - cache_7
+      - cache_8
+            
+    ports:
+      - 9121:9121
+
+  ### backends ###
+
+  backend_1:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3001:3000
+    depends_on:
+      - mongo
+      - cache_1
+    environment:
+      - BACKEND_NAME=backend_1
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_1:6379
+
+  backend_2:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3002:3000
+    depends_on:
+      - mongo
+      - cache_2
+    environment:
+      - BACKEND_NAME=backend_2
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_2:6379
+
+  backend_3:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3003:3000
+    depends_on:
+      - mongo
+      - cache_3
+    environment:
+      - BACKEND_NAME=backend_3
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_3:6379
+
+  backend_4:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3004:3000
+    depends_on:
+      - mongo
+      - cache_4
+    environment:
+      - BACKEND_NAME=backend_4
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_4:6379
+
+  backend_5:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3005:3000
+    depends_on:
+      - mongo
+      - cache_5
+    environment:
+      - BACKEND_NAME=backend_5
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_5:6379
+
+  backend_6:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3006:3000
+    depends_on:
+      - mongo
+      - cache_6
+    environment:
+      - BACKEND_NAME=backend_6
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_6:6379
+
+  backend_7:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3007:3000
+    depends_on:
+      - mongo
+      - cache_7
+    environment:
+      - BACKEND_NAME=backend_7
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_7:6379
+
+  backend_8:
+    image: npa_item_backend
+    build:
+      context: ./backend
+    ports:
+      - 3008:3000
+    depends_on:
+      - mongo
+      - cache_8
+    environment:
+      - BACKEND_NAME=backend_8
+      - MONGO_CONNECT_URL=mongodb://admin:admin@mongo:27017/
+      - LOCAL_CACHE_URL=redis://cache_8:6379
+
+  
+  ### load balancer ###
+  haproxy:
+    image: vdocker2603/haproxy-v2.9.0-nap:normal
+    #image: vdocker2603/haproxy-v2.9.0-nap:chrj
+    ports:
+      - 8080:80
+      - 8404:8404
+    volumes:
+      - ./haproxy_conf/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    depends_on:
+      - backend_1
+      - backend_2
+      - backend_3
+      - backend_4
+      - backend_5
+      - backend_6
+      - backend_7
+      - backend_8
+      

@@ -1,0 +1,28 @@
+global:
+  scrape_interval:     2s
+  evaluation_interval: 2s
+
+scrape_configs:
+  - job_name: prometheus
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: redis_exporter_targets
+    scrape_interval: 2s
+    static_configs:
+      - targets:
+        {% for i in range(1, n_backends + 1) -%}
+        - redis://cache_{{ i }}:6379
+        {% endfor %}        
+    metrics_path: /scrape
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: redis_exporter:9121
+  
+  - job_name: redis-exporter
+    static_configs:
+      - targets: ['redis_exporter:9121']
