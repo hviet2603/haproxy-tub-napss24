@@ -44,8 +44,8 @@ class TestAgent:
         self.prio_backends = [ "backend_1", "backend_2" ]
         self.workers_should_stop = Value('i', 0)
         
-        n_normal_workers = n_workers/2 + 1
-        #n_normal_workers = n_workers
+        #n_normal_workers = n_workers/2 + 1
+        n_normal_workers = n_workers
         for i in range(self.n_workers):
             if i <= n_normal_workers: 
                 worker_proc = Process(target=_worker_create_traffic, args=(self.ids, False, self.workers_should_stop, ))
@@ -69,14 +69,20 @@ class TestAgent:
                 query = {
                     "id": index
                 }
-                res = requests.post(f"{BACKEND_URL}/items", json=data, params=query)
-                if res.status_code == 201:
-                    backend = res.text
-                    print(f"Item {index} saved to {backend}")
-                    if backend in self.prio_backends and backend not in seen_prio_backends:
-                        self.prio_ids.append(index)
-                        seen_prio_backends.append(backend)
+                while True:
+                    res = requests.post(f"{BACKEND_URL}/items", json=data, params=query)
+                    if res.status_code == 201:
+                        backend = res.text
+                        print(f"Item {index} saved to {backend}")
+                        if backend in self.prio_backends and backend not in seen_prio_backends:
+                            self.prio_ids.append(index)
+                            seen_prio_backends.append(backend)
+                        break
+                    else:
+                        print(f"Failed populating data {index}, try again ...")
+                        time.sleep(1)
                 time.sleep(0.05)
+
         
         print("Finish populating the data")
 
@@ -104,13 +110,17 @@ class TestAgent:
         v = TestVisualizer()
         v.visualize()
 
+    def teardown_infra(self):
+        subprocess.run("docker compose down", shell=True, check=True)
+
 
 if __name__ == "__main__":
     agent = TestAgent(n_workers=8)
     agent.setup_infra()
     agent.populate_data()
     agent.create_traffic()
-    #time.sleep(5*60)
-    #agent.stop_traffic()
-    #time.sleep(5)
-    #agent.visualize_result()
+    time.sleep(5*60)
+    agent.stop_traffic()
+    time.sleep(5)
+    agent.visualize_result()
+    agent.teardown_infra()
