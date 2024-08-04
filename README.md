@@ -76,3 +76,7 @@ The cache hits rate can be viewed with the Grafana UI at `http://localhost:3000`
 
 We also provide a test script to send requests to the servers at `TestBed/test/test.py`. The test script populates data from `data.txt` to the servers and sends requests to retrieve these items. The requests will be sent continuously in 5 minutes. At the end, the results will be visualized and saved to the folder `TestBed/test/plots`.
 
+- Install the dependencies required by the test script with `python3 -m pip install -r requirements.txt`.
+
+- Run the test script: `python3 test.py`
+
