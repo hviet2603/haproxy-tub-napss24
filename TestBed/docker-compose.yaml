@@ -204,8 +204,8 @@ services:
   
   ### load balancer ###
   haproxy:
-    #image: vdocker2603/haproxy-v2.9.0-nap:normal
-    image: vdocker2603/haproxy-v2.9.0-nap:chrj
+    image: vdocker2603/haproxy-v2.9.0-nap:normal
+    #image: vdocker2603/haproxy-v2.9.0-nap:chrj
     #image: vdocker2603/haproxy-v2.9.0-nap:rotor
     ports:
       - 8080:80

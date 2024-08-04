@@ -44,8 +44,8 @@ class TestAgent:
         self.prio_backends = [ "backend_1", "backend_2" ]
         self.workers_should_stop = Value('i', 0)
         
-        n_normal_workers = n_workers/2 + 1
-        #n_normal_workers = n_workers
+        #n_normal_workers = n_workers/2 + 1
+        n_normal_workers = n_workers
         for i in range(self.n_workers):
             if i <= n_normal_workers: 
                 worker_proc = Process(target=_worker_create_traffic, args=(self.ids, False, self.workers_should_stop, ))
@@ -81,7 +81,7 @@ class TestAgent:
                     else:
                         print(f"Failed populating data {index}, try again ...")
                         time.sleep(1)
-                time.sleep(0.05)
+                time.sleep(0.5)
 
         
         print("Finish populating the data")
