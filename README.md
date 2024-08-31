@@ -70,6 +70,8 @@ Comment and uncomment lines in the `docker-compose.yaml` file to select the algo
 
 Run the test bed with `docker compose up -d`.
 
+**Note:** Before starting the test bed, the access right to the folder `TestBed/monitoring/grafana` and all of its content may need to be changed. This can be done with e.g. `chmod -R 777 TestBed/monitoring/grafana`. 
+
 Requests to the servers can be sent to the HAProxy instance through `localhost:8080`.
 
 The cache hits rate can be viewed with the Grafana UI at `http://localhost:3000`.
